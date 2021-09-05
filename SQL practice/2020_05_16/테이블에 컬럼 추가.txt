@@ -1,0 +1,1 @@
+ALTER TABLE student ADD gender CHAR(1) NULL;

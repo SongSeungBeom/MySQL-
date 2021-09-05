@@ -1,0 +1,3 @@
+INSERT INTO course_rating.student 
+	(id, name, student_number, major, email, phone, admission_date) //모든 값이 있는 row는 이거 생략 가능
+	VALUES (1, '송승범', '2015311714', '수학과', 'radiopc3@naver.com', '010-6314-2837', '2015-03-02');

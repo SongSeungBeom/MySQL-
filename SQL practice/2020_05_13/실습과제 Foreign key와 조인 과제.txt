@@ -1,0 +1,37 @@
+실습과제
+아래와 같이 코드잇 피자 가게의 각 메뉴의 가격과 원가를 보여주는 pizza_price_cost 테이블이 있습니다.
+
+id	name	price	cost
+1	Potato Bacon Pizza	22000	14000
+2	Sweet Potato Pizza	24000	14000
+3	Combination Pizza	25000	13000
+4	Bacon Cheddar Pizza	32000	20000
+5	Pineapple Pizza	25000	22000
+6	Garlic Shrimp Pizza	26000	19000
+7	Cheeze Pizza 	23000	17000
+8	Pepperoni Pizza 	24000	13000
+
+그리고 각 피자의 판매량 정보가 담긴 sales 테이블이 있는데요.
+
+id	menu_id	sales_volume
+1	2	220
+2	3	137
+3	5	121
+4	6	225
+5	8	167
+이 두 테이블을 조인해서, 각 피자별 판매량을 한꺼번에 보려고 합니다.
+
+(1) 조인을 통해 생성된 결과 중에서 pizza_price_cost 테이블의 name 컬럼과, sales 테이블의 sales_volume 컬럼만 조회하세요. 
+
+(2) 이때 sales_volume 컬럼에는 '판매량'이라는 alias를 붙이고, sales_volume이 NULL인 row의 경우에는 ‘판매량 정보 없음’으로 표시하세요.
+
+SELECT
+    p.name,
+    COALESCE(s.sales_volume, '판매량 정보 없음') AS '판매량'
+
+FROM 
+    pizza_price_cost AS p 
+    LEFT OUTER JOIN
+    sales AS s
+ON 
+    p.id = s.menu_id;

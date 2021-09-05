@@ -1,0 +1,6 @@
+ALTER TABLE `course_rating`.`review` 
+ADD CONSTRAINT `fk_review_course`
+  FOREIGN KEY (`course_id`)
+  REFERENCES `course_rating`.`course` (`id`)
+  ON DELETE RESTRICT
+  ON UPDATE RESTRICT;

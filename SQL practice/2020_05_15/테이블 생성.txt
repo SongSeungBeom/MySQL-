@@ -1,0 +1,9 @@
+CREATE TABLE `courserating`.`student` ( //backtick `은 숫자키1 왼쪽 키
+	`id` INT NOT NULL AUTO_INCREMENT //PRIMARY KEY 해도 됨,
+	`name` VARCHAR(20) NULL //NULL은 없어도 됨,
+	`student_number` INT NULL,
+	`major` VARCHAR(15) NULL,
+	`email` VARCHAR(50) NULL,
+	`phone` VARCHAR(15) NULL,
+	`admission_date` DATE NULL,
+	PRIMARY KEY (`id`))

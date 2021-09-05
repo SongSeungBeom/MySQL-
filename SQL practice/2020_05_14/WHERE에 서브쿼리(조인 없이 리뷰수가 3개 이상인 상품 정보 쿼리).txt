@@ -1,0 +1,13 @@
+SELECT * 
+FROM 
+	copang_main.item AS i
+WHERE
+	i.id IN
+	(SELECT
+		r.item_id
+	 FROM
+		copang_main.review AS r
+	 GROUP BY r.item_id
+     HAVING COUNT(r.comment) >= 3
+     )
+;

@@ -1,0 +1,2 @@
+ALTER TABLE student
+	ADD CONSTRAINT st_rule CHECK (registration_number < 30000000);

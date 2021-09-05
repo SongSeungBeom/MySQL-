@@ -1,0 +1,1 @@
+UPDATE course_rating.student SET major = '인공지능학과', name = '신지혜' WHERE id = 1;

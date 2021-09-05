@@ -1,0 +1,6 @@
+SELECT
+	id,
+    name,
+    price,
+    (SELECT MAX(price) FROM item)
+FROM copang_main.item;

@@ -1,0 +1,6 @@
+CREATE TABLE copy_of_undergraduate LIKE undergraduate;
+
+
+내용까지 복사 하고 싶으면 위에거 실행한 다음,
+INSERT INTO copy_of_undergraduate 
+	SELECT * FROM undergraduate WHERE major = 101;

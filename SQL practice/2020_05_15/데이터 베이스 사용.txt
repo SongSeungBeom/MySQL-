@@ -1,0 +1,1 @@
+USE course_rating;

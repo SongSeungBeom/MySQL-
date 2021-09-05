@@ -1,0 +1,11 @@
+SELECT 
+	i.id,
+    i.name,
+    AVG(COALESCE(r.star,0)) AS avg_star
+FROM 
+	item AS i LEFT OUTER JOIN review AS r
+		ON r.item_id = i.id
+GROUP BY i.id, i.name
+HAVING avg_star < (SELECT AVG(COALESCE(review.star,0)) FROM review)
+ORDER BY AVG(COALESCE(r.star,0)) DESC
+;

@@ -1,0 +1,74 @@
+실습과제
+우리가 이때까지 다뤘던 member 테이블, item 테이블, review 테이블은 다음과 같이 생겼습니다.
+
+(1) member 테이블
+
+id	email	age	gender	height	weight	birthday	sign_up_day	address
+1	codeit@naver.com	28	m	178.2	70	1992-01-03	2019-03-26	서울특별시 중구 삼일대로...
+2	korin02@google.com	29	m	165.7	67.3	1992-08-13	2019-02-27	서울특별시 중구 세종대로...
+3	cowboy@codeit.kr	31	m	NULL	70.2	1990-01-03	2019-01-05	경기도 고양시 일산서구 고양대로...
+4	get_flower@naver.com	-10	f	183.5	72	1975-03-12	2018-11-29	NULL
+5	taehos@hanmail.net	27	m	181.3	70	1992-09-02	2017-03-14	제주 제주시 문연로...
+...	...	...	...	...	...	...	...	...
+(2) item 테이블
+
+id	name	gender	price	description	registration_date
+1	남녀 공용 오버핏 반팔 라운드 티셔츠	u	22000	캐쥬얼한 무드를 연출할 수...	2018-03-21
+2	남성용 밴딩 린넨 와이드 팬츠	m	33000	매 시즌 사랑받았던, 여름에...	2019-08-11
+3	남성용 순면 러닝	m	9000	속옷 전문기업의 봉제 기술로 세탁 후에도...	2018-04-15
+4	무지 7부 반팔 티셔츠	u	13000	유니크한 디테일과 편안한 핏을 위해...	2019-05-14
+5	브루너 반팔 티셔츠	m	20000	뉴욕 스트릿의 감성이 살아나는 패턴이...	2019-05-14
+...	...	...	...	...	...
+(3) review 테이블
+
+id	mem_id	item_id	star	comment
+1	1	1	5	착용감이 너무 좋아요, 요새 맨날 이것만 입고 다닙니다.
+2	1	2	2	그럭저럭 입을만 하긴 한데 밴딩이 너무 조여요 ㅜㅜ
+3	1	6	5	한 번 사보고 촉감이 너무 좋아서 10장 구매했습니다~
+4	1	14	4	두툼한 느낌이 좋기는 한데 실내에서는 땀이 좀 나네요..
+5	2	4	3	그냥 입을만한 정도에요.
+...	...	...	...	...
+이전 영상에서 이 3가지 테이블을 조인해서 의미있는 데이터를 추출해봤는데요.
+
+이번에는 이 세 테이블을 조인해서 '남녀 공용 상품의 등록 연도별 평균 별점'을 보고 싶습니다. 다음 조건을 만족하는 알맞은 SQL 문을 작성해보세요.
+
+(1) 일단 세 테이블을 이너 조인(INNER JOIN)하세요.
+
+*조인 기준은 다음과 같이 하면 됩니다 
+
+review 테이블의 item_id 컬럼 - item 테이블의 id 컬럼 / review 테이블의 mem_id 컬럼 - member 테이블의 id 컬럼
+
+(2) 그리고 item 테이블의 gender 컬럼의 값이 u인 row들만 선별하세요.
+
+(3) item 테이블의 registration_date 컬럼에서 연도를 추출해서 이것(상품 등록 연도)을 기준으로 row들을 그루핑하세요.
+
+(4) 각 그룹 내 row 개수가 10개 이상인 그룹들만 추리세요.
+
+(5) 결과를 별점 평균값을 기준으로 내림차순 정렬하세요.
+
+(6) 컬럼은 총 세 개를 조회하세요.
+
+a) 상품 등록 연도 컬럼('등록 연도'라는 alias를 붙이세요.)
+
+b) 각 그룹 내 row의 개수('리뷰 개수'라는 alias를 붙이세요.)
+
+c) 각 그룹별 별점 평균값('별점 평균값'이라는 alias를 붙이세요.)
+
+이 과제는 이때까지 배운 내용을 전체적으로 종합한 과제입니다. 시간이 조금 걸리더라도, 이전 영상/노트들을 참조해서 끝까지 스스로 해결해보세요! 위 조건들의 순서대로 SQL 문을 조금씩 완성해나간다면 금방 답을 찾을 수 있을 겁니다.
+
+
+
+
+SELECT 
+    YEAR(i.registration_date) AS '등록 연도',
+    COUNT(*) AS '리뷰 개수',
+    AVG(COALESCE(r.star,0)) AS '별점 평균값'
+FROM 
+	item AS i INNER JOIN review AS r
+		ON r.item_id = i.id
+	INNER JOIN member AS m
+		ON r.mem_id = m.id 
+WHERE i.gender = 'u'
+GROUP BY YEAR(i.registration_date)
+HAVING COUNT(*) >= 10
+ORDER BY AVG(COALESCE(r.star,0)) DESC
